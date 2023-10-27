@@ -23,7 +23,8 @@
 6
 -1
 35
--1*/
+-1
+*/
 
 #include<iostream>
 using namespace std;
