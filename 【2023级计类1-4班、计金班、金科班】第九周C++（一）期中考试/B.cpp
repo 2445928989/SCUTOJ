@@ -20,34 +20,35 @@
 x,x1,x2 没有前导0。例如： 00123=123。*/
 
 #include<iostream>
-#include<string>
-#include<math.h>
+#include<cmath>
 using namespace std;
 int main()
 {
-    int a, arr[10] = { 0 }, b, c;
-    while (cin >> a) {
-        int min = 99999999999999;
-        if (a > 1000000000 || a < 10) {
-            cout << -1 << endl;
-            continue;
-        }
-        for (int i = 0; i <= 9; i++) {
-            b = pow(10, 9-i);
-            arr[i] = a / b%10;
-        }
-        for (int i = 0; i < 9; i++) {
-            int num1=0, num2=0;
-            for (int j = 9; j > i; j--) {
-                num2 += arr[j] * pow(10, 9 - j);
-            }
-            for (int k = i; k >= 0; k--) {
-                num1 += arr[k] * pow(10, i - k);
-            }
-            if (min > num1 + num2)min = num1 + num2;
-        }
-        cout << min << endl;
-    }
-    system("pause");
-    return 0;
+	int x, num1, num2, min = 999999999;
+	int y, z;
+	while (cin >> x)
+	{
+		int n = 0; int s = 0;
+		if (x < 10 || x>1000000000)
+		{
+			cout << "-1" << endl;
+		}
+		else if (x >= 10 && x <= 1000000000)
+		{
+			y = x;
+			while (y > 0)
+			{
+				y /= 10;
+				n++;
+			}
+			for (int i = 1; i < n; i++) {
+				int p = pow(10, i);
+				num1 = x / p;
+				num2 = x % p;
+				if (num1 + num2 < min)min = num1 + num2;
+			}
+			cout << min << endl;
+			min = 99999999999;
+		}
+	}
 }
