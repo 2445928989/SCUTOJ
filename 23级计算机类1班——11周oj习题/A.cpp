@@ -170,3 +170,4 @@ int main() {
     }
     system("pause");
 }
+//又臭又长。
