@@ -7,7 +7,7 @@
 #include<time.h>
 #include<math.h>
 #include<algorithm>
-//¿Éµ÷Êı¾İ
+//å¯è°ƒæ•°æ®
 #define MAXN 25
 #define wall_char '#'
 #define road_char '.'
@@ -24,7 +24,7 @@ pair<int, int>fa[MAXN * 2 + 1][MAXN * 2 + 1];
 struct Data {
 	int x;
 	int y;
-	double distance;//Ä£ÄâÅ·¼¸ÀïµÃ¾àÀë
+	double distance;//æ¨¡æ‹Ÿæ¬§å‡ é‡Œå¾—è·ç¦»
 	inline Data() {
 		this->x = 0;
 		this->y = 0;
@@ -38,17 +38,17 @@ struct Data {
 	bool operator<(const Data& other)const {
 		return this->distance < other.distance;
 	}
-}heap[1000];//Êı×éÄ£Äâ¶Ñ
-pair<int, int> st[1000];//Êı×éÄ£ÄâÕ»
-pair<int, int> qu[4000];//Êı×éÄ£Äâ¶ÓÁĞ
-bool found = 0;//µİ¹éº¯ÊıÊÇ·ñ½áÊø
-void up(int ind) {//Ä£ÄâÉÏ¸¡
+}heap[1000];//æ•°ç»„æ¨¡æ‹Ÿå †
+pair<int, int> st[1000];//æ•°ç»„æ¨¡æ‹Ÿæ ˆ
+pair<int, int> qu[4000];//æ•°ç»„æ¨¡æ‹Ÿé˜Ÿåˆ—
+bool found = 0;//é€’å½’å‡½æ•°æ˜¯å¦ç»“æŸ
+void up(int ind) {//æ¨¡æ‹Ÿä¸Šæµ®
 	if (ind / 2 && heap[ind] < heap[ind / 2]) {
 		swap(heap[ind / 2], heap[ind]);
 		up(ind / 2);
 	}
 }
-void down(int ind) {//Ä£ÄâÏÂ³Á
+void down(int ind) {//æ¨¡æ‹Ÿä¸‹æ²‰
 	int t = ind;
 	if (2 * ind && heap[2 * ind] < heap[t])t = 2 * ind;
 	if (2 * ind + 1 && heap[2 * ind + 1] < heap[t])t = 2 * ind + 1;
@@ -57,15 +57,15 @@ void down(int ind) {//Ä£ÄâÏÂ³Á
 		down(t);
 	}
 }
-void pop(int &sz) {//Ä£Äâµ¯³ö
+void pop(int &sz) {//æ¨¡æ‹Ÿå¼¹å‡º
 	heap[1] = heap[sz--];
 	down(1);
 }
-void inse(int &sz, Data x) {//Ä£Äâ²åÈë
+void inse(int &sz, Data x) {//æ¨¡æ‹Ÿæ’å…¥
 	heap[++sz] = x;
 	up(sz);
 }
-void output(int size) {//Êä³öÃÔ¹¬
+void output(int size) {//è¾“å‡ºè¿·å®«
 	int length = size * 2 + 1;
 	for (int i = 0; i < length; i++) {
 		for (int j = 0; j < length; j++) {
@@ -80,22 +80,22 @@ void output(int size) {//Êä³öÃÔ¹¬
 		cout << endl;
 	}
 }
-void trace(int size,int time) {//Ñ°ÕÒ¿É³öÃÔ¹¬µÄ¹ì¼£
+void trace(int size,int time) {//å¯»æ‰¾å¯å‡ºè¿·å®«çš„è½¨è¿¹
 	pair<int, int>i=mazeend;
 	while (i != mazestart) {
 		maze[i.first][i.second] = end_char;
 		system("cls");
-		cout << "³É¹¦×ß³öÃÔ¹¬£¡²½Êı£º" << time << endl;
+		cout << "æˆåŠŸèµ°å‡ºè¿·å®«ï¼æ­¥æ•°ï¼š" << time << endl;
 		output(size);
 		i = fa[i.first][i.second];
 		Sleep(1);
 	}
 	maze[i.first][i.second] = end_char;
 	system("cls");
-	cout << "³É¹¦×ß³öÃÔ¹¬£¡²½Êı£º" << time << endl;
+	cout << "æˆåŠŸèµ°å‡ºè¿·å®«ï¼æ­¥æ•°ï¼š" << time << endl;
 	output(size);
 }
-void init(int size) {//³õÊ¼»¯ÃÔ¹¬
+void init(int size) {//åˆå§‹åŒ–è¿·å®«
 	int length = 2 * size + 1;
 	for (int i = 0; i < length; i++) {
 		for (int j = 0; j < length; j++) {
@@ -108,7 +108,7 @@ void init(int size) {//³õÊ¼»¯ÃÔ¹¬
 		}
 	}
 }
-void start_and_end(int size) {//Ëæ»úÉú³ÉÈë¿ÚÓë³ö¿Ú
+void start_and_end(int size) {//éšæœºç”Ÿæˆå…¥å£ä¸å‡ºå£
 	int length = size * 2 + 1;
 	int maze_start = rand() % size;
 	int maze_end = rand() % size;
@@ -132,20 +132,20 @@ void start_and_end(int size) {//Ëæ»úÉú³ÉÈë¿ÚÓë³ö¿Ú
 	maze[mazestart.first][mazestart.second] = search_char;
 	maze[mazeend.first][mazeend.second] = end_char;
 }
-void mazeGenerator_Prim(int size) {//»ùÓÚprimµÄÃÔ¹¬Éú³É
+void mazeGenerator_Prim(int size) {//åŸºäºprimçš„è¿·å®«ç”Ÿæˆ
 	int length = 2 * size + 1;
-	//»ñÈ¡ÃÔ¹¬µÄÖÖ×Ó
+	//è·å–è¿·å®«çš„ç§å­
 	srand(time(0));
 
-	//³õÊ¼»¯ÃÔ¹¬
+	//åˆå§‹åŒ–è¿·å®«
 
 	init(size);
 
-	//ÉèÖÃ³ö¿Ú¡¢Èë¿Ú
+	//è®¾ç½®å‡ºå£ã€å…¥å£
 
 	start_and_end(size);
 
-	//¿ªÊ¼Éú³ÉÃÔ¹¬
+	//å¼€å§‹ç”Ÿæˆè¿·å®«
 
 	vector<pair<int, int>>wall;
 	bool access[MAXN * 2 + 1][MAXN * 2 + 1];
@@ -208,20 +208,20 @@ void mazeGenerator_Prim(int size) {//»ùÓÚprimµÄÃÔ¹¬Éú³É
 		}
 	}
 }
-void mazeGenerator_Random(int size,int weight) {//Ëæ»úÉú³ÉÃÔ¹¬
+void mazeGenerator_Random(int size,int weight) {//éšæœºç”Ÿæˆè¿·å®«
 	int length = 2 * size + 1;
-	//»ñÈ¡ÃÔ¹¬µÄÖÖ×Ó
+	//è·å–è¿·å®«çš„ç§å­
 	srand(time(0));
 
-	//³õÊ¼»¯ÃÔ¹¬
+	//åˆå§‹åŒ–è¿·å®«
 
 	init(size);
 
-	//ÉèÖÃ³ö¿Ú¡¢Èë¿Ú
+	//è®¾ç½®å‡ºå£ã€å…¥å£
 
 	start_and_end(size);
 
-	//¿ªÊ¼Éú³ÉÃÔ¹¬
+	//å¼€å§‹ç”Ÿæˆè¿·å®«
 	int road_num = weight * (length - 2) * (length - 2) / 10;
 	for (int i = 0; i < road_num; i++) {
 		int x = rand() % (length - 2) + 1;
@@ -229,13 +229,13 @@ void mazeGenerator_Random(int size,int weight) {//Ëæ»úÉú³ÉÃÔ¹¬
 		maze[x][y] = road_char;
 	}
 }
-void mazeTraverse_dfs(int size) {//»ùÓÚdfsµÄÃÔ¹¬±éÀú
+void mazeTraverse_dfs(int size) {//åŸºäºdfsçš„è¿·å®«éå†
 	int time = 1;
 	int sz = 0;
 	st[++sz] = mazestart;
 	while (sz) {//DFS
 		system("cls");
-		cout << "µÚ " << time++ << " ´ÎËÑË÷£º\n";
+		cout << "ç¬¬ " << time++ << " æ¬¡æœç´¢ï¼š\n";
 		pair<int,int> top = st[sz];
 		sz--;
 		maze[top.first][top.second] = search_char;
@@ -252,14 +252,14 @@ void mazeTraverse_dfs(int size) {//»ùÓÚdfsµÄÃÔ¹¬±éÀú
 			}
 		}
 	}
-	cout << "ÎŞ·¨Àë¿ªÃÔ¹¬£¡\n";
+	cout << "æ— æ³•ç¦»å¼€è¿·å®«ï¼\n";
 }
-void mazeTraverse_bfs(int size) {//»ùÓÚbfsµÄÃÔ¹¬±éÀú
+void mazeTraverse_bfs(int size) {//åŸºäºbfsçš„è¿·å®«éå†
 	int head = 0, tail = 0, time = 1;
 	qu[tail] = mazestart;
 	while (head <= tail) {
 		system("cls");
-		cout << "µÚ " << time++ << " ´ÎËÑË÷£º\n";
+		cout << "ç¬¬ " << time++ << " æ¬¡æœç´¢ï¼š\n";
 		pair<int, int> top = qu[head];
 		head++;
 		output(size);
@@ -277,13 +277,13 @@ void mazeTraverse_bfs(int size) {//»ùÓÚbfsµÄÃÔ¹¬±éÀú
 		}
 	}
 }
-void mazeTraverse_Astar(int size) {//»ùÓÚA*µÄÃÔ¹¬±éÀú
+void mazeTraverse_Astar(int size) {//åŸºäºA*çš„è¿·å®«éå†
 	int time = 1;
 	int sz = 0;
 	heap[++sz] = Data(mazestart.first,mazestart.second);
 	while (sz!=-1) {
 		system("cls");
-		cout << "µÚ " << time++ << " ´ÎËÑË÷£º\n";
+		cout << "ç¬¬ " << time++ << " æ¬¡æœç´¢ï¼š\n";
 		Data top = heap[1];
 		pop(sz);
 		maze[top.x][top.y] = search_char;
@@ -300,7 +300,7 @@ void mazeTraverse_Astar(int size) {//»ùÓÚA*µÄÃÔ¹¬±éÀú
 			}
 		}
 	}
-	cout << "ÎŞ·¨Àë¿ªÃÔ¹¬£¡\n";
+	cout << "æ— æ³•ç¦»å¼€è¿·å®«ï¼\n";
 }
 void mazeTraverse(int x,int y,int time,int size) {
 	maze[x][y] = search_char;
@@ -311,7 +311,7 @@ void mazeTraverse(int x,int y,int time,int size) {
 	}
 	Sleep(cold_down);
 	system("cls");
-	cout << "µÚ " << time << " ´ÎËÑË÷£º\n";
+	cout << "ç¬¬ " << time << " æ¬¡æœç´¢ï¼š\n";
 	output(size);
 	for (int i = 0; i < 4; i++) {
 		if (maze[x + dx[i]][y + dy[i]] == road_char || maze[x + dx[i]][y + dy[i]] == end_char) {
@@ -330,7 +330,7 @@ void mazeTraverse_back(int x, int y, int time, int size) {
 	}
 	Sleep(cold_down);
 	system("cls");
-	cout << "µÚ " << time << " ´ÎËÑË÷£º\n";
+	cout << "ç¬¬ " << time << " æ¬¡æœç´¢ï¼š\n";
 	output(size);
 	for (int i = 0; i < 4; i++) {
 		if (maze[x + dx[i]][y + dy[i]] == road_char || maze[x + dx[i]][y + dy[i]] == end_char) {
@@ -346,16 +346,16 @@ int main() {
 	system("cls");
 	int t;
 	int sel;
-	cout << "ÇëÊäÈëÉú³ÉÃÔ¹¬µÄ·½Ê½£º\n1.PrimËæ»úÃÔ¹¬\n2.´¿Ëæ»úÃÔ¹¬\n";
+	cout << "è¯·è¾“å…¥ç”Ÿæˆè¿·å®«çš„æ–¹å¼ï¼š\n1.Priméšæœºè¿·å®«\n2.çº¯éšæœºè¿·å®«\n";
 	cin >> sel;
 	while (sel < 0 ||  sel > 2) {
-		cout << "ÊäÈëÎŞĞ§£¡ÇëÖØĞÂÊäÈë£¡\n";
+		cout << "è¾“å…¥æ— æ•ˆï¼è¯·é‡æ–°è¾“å…¥ï¼\n";
 		cin >> sel;
 	}
-	cout << "ÇëÊäÈëÃÔ¹¬µÄ³ß´ç(5-"<<MAXN<<"):\n";
+	cout << "è¯·è¾“å…¥è¿·å®«çš„å°ºå¯¸(5-"<<MAXN<<"):\n";
 	cin >> t;
 	while (t < 5 || t > MAXN) {
-		cout << "ÊäÈëÎŞĞ§£¡ÇëÖØĞÂÊäÈë£¡\n";
+		cout << "è¾“å…¥æ— æ•ˆï¼è¯·é‡æ–°è¾“å…¥ï¼\n";
 		cin >> t;
 	}
 	switch (sel) {
@@ -365,19 +365,19 @@ int main() {
 	}
 	case 2: {
 		int weight;
-		cout << "ÇëÊäÈë¿Õ°×Â·¾¶µÄÈ¨ÖØ(1-10):\n";
+		cout << "è¯·è¾“å…¥ç©ºç™½è·¯å¾„çš„æƒé‡(1-10):\n";
 		cin >> weight;
 		while (weight < 0 || weight>10) {
-			cout << "ÊäÈëÎŞĞ§£¡ÇëÖØĞÂÊäÈë£¡\n";
+			cout << "è¾“å…¥æ— æ•ˆï¼è¯·é‡æ–°è¾“å…¥ï¼\n";
 			cin >> weight;
 		}
 		mazeGenerator_Random(t,weight);
 		break;
 	}	
 	}
-	cout << "ÕıÔÚÉú³ÉÃÔ¹¬¡­¡­\n";
+	cout << "æ­£åœ¨ç”Ÿæˆè¿·å®«â€¦â€¦\n";
 	output(t);
-	cout << "Éú³ÉÍê±Ï£¡ÇëÊäÈë±éÀúÃÔ¹¬µÄ·½Ê½£º\n1.DFS\n2.BFS\n3.A*\n4.µİ¹é\n5.ËÑË÷Óë»ØËİ\n";
+	cout << "ç”Ÿæˆå®Œæ¯•ï¼è¯·è¾“å…¥éå†è¿·å®«çš„æ–¹å¼ï¼š\n1.DFS\n2.BFS\n3.A*\n4.é€’å½’\n5.æœç´¢ä¸å›æº¯\n";
 	select_search:
 	cin >> sel;
 	switch (sel) {
@@ -395,16 +395,16 @@ int main() {
 	}
 	case 4: {
 		mazeTraverse(mazestart.first, mazestart.second, 1, t);
-		if (!found)cout << "ÎŞ·¨Àë¿ªÃÔ¹¬£¡\n";
+		if (!found)cout << "æ— æ³•ç¦»å¼€è¿·å®«ï¼\n";
 		break;
 	}
 	case 5: {
 		mazeTraverse_back(mazestart.first, mazestart.second, 1, t);
-		if (!found)cout << "ÎŞ·¨Àë¿ªÃÔ¹¬£¡\n";
+		if (!found)cout << "æ— æ³•ç¦»å¼€è¿·å®«ï¼\n";
 		break;
 	}
 	default: {
-		cout << "ÎŞĞ§µÄÑ¡Ôñ£¡ÇëÖØĞÂÊäÈë£¡\n";
+		cout << "æ— æ•ˆçš„é€‰æ‹©ï¼è¯·é‡æ–°è¾“å…¥ï¼\n";
 		goto select_search;
 	}
 	}
