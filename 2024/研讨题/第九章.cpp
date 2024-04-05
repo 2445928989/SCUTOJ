@@ -21,9 +21,9 @@ protected:
     static int total;
 
 public:
-    friend ostream &operator<<(ostream &cout, Student A)
+    friend ostream &operator<<(ostream &cout, Student &A)
     {
-        cout << A.number << '\t' << A.name << '\t' << A.sex << '\t' << A.English_score << '\t' << A.Chinese_score << '\t' << A.Math_score <<A.get_total()<< endl;
+        cout << A.number << '\t' << A.name << '\t' << A.sex << '\t' << A.English_score << '\t' << A.Chinese_score << '\t' << A.Math_score <<'\t'<<A.get_total()<< endl;
         return cout;
     }
     int getChinese()
@@ -38,7 +38,7 @@ public:
     {
         return English_score;
     }
-    int get_total() 
+    virtual int get_total() 
     {
         return English_score + Chinese_score + Math_score;
     }
@@ -76,10 +76,6 @@ private:
     static int science_total;
 
 public:
-    int get_total()
-    {
-        return Student::get_total() + phy_score + che_score + bio_score;
-    }
     int sum()
     {
         Student::sum();
@@ -95,7 +91,7 @@ public:
         cin >> A.number >> A.name >> A.sex >> A.English_score >> A.Chinese_score >> A.Math_score >> A.phy_score >> A.che_score >> A.bio_score;
         return cin;
     }
-    friend ostream &operator<<(ostream &cout, ScienceStudent A)
+    friend ostream &operator<<(ostream &cout, ScienceStudent &A)
     {
         cout << A.number << '\t' << A.name << '\t' << A.sex << '\t' << A.English_score << '\t' << A.Chinese_score << '\t' << A.Math_score << '\t' << A.phy_score << '\t' << A.che_score << '\t' << A.bio_score << '\t' << A.sum() << endl;
         return cout;
@@ -103,6 +99,10 @@ public:
     void static get_average()
     {
         cout << "the average of physcis:" << (double)phy_total / science_total << "\tchemistry:" << (double)che_total / science_total << "\tbiology:" << (double)bio_total / science_total << endl;
+    }
+    int virtual get_total()
+    {
+        return English_score + Chinese_score + Math_score + che_score + phy_score + bio_score;
     }
 };
 class LiberalArtsStudent : public Student
@@ -117,6 +117,10 @@ private:
     static int lib_total;
 
 public:
+    virtual int get_total()
+    {
+        return English_score + Chinese_score + Math_score + his_score + geo_score + pol_score;
+    }
     int sum()
     {
         Student::sum();
@@ -127,16 +131,12 @@ public:
         return Chinese_score + English_score + Math_score + his_score + geo_score + pol_score;
     }
     LiberalArtsStudent() {}
-    int get_total()
-    {
-        return Student::get_total() + geo_score + his_score + pol_score;
-    }
     friend istream &operator>>(istream &cin, LiberalArtsStudent &A)
     {
         cin >> A.number >> A.name >> A.sex >> A.English_score >> A.Chinese_score >> A.Math_score >> A.his_score >> A.geo_score >> A.pol_score;
         return cin;
     }
-    friend ostream &operator<<(ostream &cout, LiberalArtsStudent A)
+    friend ostream &operator<<(ostream &cout, LiberalArtsStudent &A)
     {
         cout << A.number << '\t' << A.name << '\t' << A.sex << '\t' << A.English_score << '\t' << A.Chinese_score << '\t' << A.Math_score << '\t' << A.his_score << '\t' << A.geo_score << '\t' << A.pol_score << '\t' << A.sum() << endl;
         return cout;
