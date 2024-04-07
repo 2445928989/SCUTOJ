@@ -90,4 +90,142 @@ ba 62
 平均工资：6450
 最高工资：6860
 最低工资：6040*/
+#include<iostream>
+#include<vector>
+#include <climits>
+using namespace std;
+class Employee
+{
+protected:
+    double basic_salary;
+    string name;
 
+public:
+    Employee(string str, int a)
+    {
+        name = str;
+        basic_salary = a;
+    }
+};
+class teacher : public Employee
+{
+protected:
+    int class_number;
+    int class_salary;
+public:
+    teacher(string str) : Employee(str, 5000) {}
+    int pay(){
+        return class_salary * class_number + basic_salary;
+    }
+    virtual void print() = 0;
+};
+class professor : public teacher
+{
+public:
+    professor(string str, int x) : teacher(str)
+    {
+        class_number = x;
+        class_salary = 50;
+    }
+    virtual void print()
+    {
+        cout << "教授：" << name;
+    }
+};
+class associateprofessor : public teacher
+{
+public:
+    associateprofessor(string str, int x) : teacher(str)
+    {
+        class_number = x;
+        class_salary = 30;
+    }
+    virtual void print()
+    {
+        cout << "副教授：" << name;
+    }
+};
+class lecturer : public teacher
+{
+public:
+    lecturer(string str, int x) : teacher(str)
+    {
+        class_number = x;
+        class_salary = 20;
+    }
+    virtual void print()
+    {
+        cout << "讲师：" << name;
+    }
+};
+int main()
+{
+    vector<teacher*> teachers; // 创建一个存储教职工指针的向量
+
+    // 输入教职工信息
+    int numTeachers;
+    cout << "请输入教职工人数：";
+    cin >> numTeachers;
+
+    for (int i = 0; i < numTeachers; ++i)
+    {
+        char name[30];
+        int coursetime;
+        cout << "请输入教职工姓名和课时：";
+        cin >> name >> coursetime;
+
+        int type;
+        cout << "请选择职称（1. 教授 2. 副教授 3. 讲师）：";
+        cin >> type;
+
+        teacher *t;
+        if (type == 1)
+            t = new professor(name, coursetime);
+        else if (type == 2)
+            t = new associateprofessor(name, coursetime);
+        else if (type == 3)
+            t = new lecturer(name, coursetime);
+        else
+        {
+            cout << "无效的职称类型！" << endl;
+            continue;
+        }
+
+        teachers.push_back(t);
+    }
+
+    // 输出每位教职工的工资条
+    cout << "教职工工资条：" << endl;
+    for (auto t : teachers)
+    {
+        t->print();
+        cout << " 工资：" << t->pay() << endl;
+    }
+
+    // 统计当月总工资、平均工资、最高工资和最低工资
+    int totalSalary = 0;
+    int maxSalary = 0;
+    int minSalary = INT_MAX; // 初始化为最大值
+    for (auto t : teachers)
+    {
+        int salary = t->pay();
+        totalSalary += salary;
+        maxSalary = max(maxSalary, salary);
+        minSalary = min(minSalary, salary);
+    }
+    double averageSalary = static_cast<double>(totalSalary) / numTeachers;
+
+    // 输出统计结果
+    cout << "当月总工资：" << totalSalary << endl;
+    cout << "平均工资：" << averageSalary << endl;
+    cout << "最高工资：" << maxSalary << endl;
+    cout << "最低工资：" << minSalary << endl;
+
+    // 释放内存
+    for (auto t : teachers)
+    {
+        delete t;
+    }
+
+    return 0;
+}
