@@ -33,3 +33,106 @@ wushan
 通信地址：01110111 01110101 01110011 01101000 01100001 01101110
 提示
 注意字符编码为utf-8，以及char和unsigned char字符的区别*/
+#define _CRT_SECURE_NO_WARNINGS
+#include <fstream>
+#include <iostream>
+#include <cstring>
+using namespace std;
+class MAN
+{
+public:
+    char num[32];
+    int lnum;
+    int lname;
+    int ltel;
+    int lmail;
+    int lplace;
+    char name[32];
+    char tel[32];
+    char mail[32];
+    char place[32];
+    MAN()
+    {
+        memset(this, 0, sizeof(MAN));
+    }
+};
+void onbit(char a)
+{
+    bool t[8];
+    for (int i = 7; i >= 0; i--)
+    {
+        t[i] = a % 2;
+        a /= 2;
+    }
+    for (int i = 0; i < 8; i++)
+    {
+        cout << t[i];
+    }
+}
+void output(MAN t)
+{
+    cout << "编号：";
+    for (int i = 0; i < t.lnum; i++)
+    {
+        onbit(t.num[i]);
+        cout << ' ';
+    }
+    cout << endl
+         << "姓名：";
+    for (int i = 0; i < t.lname; i++)
+    {
+        onbit(t.name[i]);
+        cout << ' ';
+    }
+    cout << endl
+         << "电话号码：";
+    for (int i = 0; i < t.ltel; i++)
+    {
+        onbit(t.tel[i]);
+        cout << ' ';
+    }
+    cout << endl
+         << "邮政编码：";
+    for (int i = 0; i < t.lmail; i++)
+    {
+        onbit(t.mail[i]);
+        cout << ' ';
+    }
+    cout << endl
+         << "通信地址：";
+    for (int i = 0; i < t.lplace; i++)
+    {
+        onbit(t.place[i]);
+        cout << ' ';
+    }
+    cout << endl
+         << endl;
+}
+int main()
+{
+    MAN m;
+    int n;
+    cout << "请输入职工人数：";
+    cin >> n;
+    for (int i = 1; i <= n; i++)
+    {
+        cout << "请输入第" << i << "个职工的编号：";
+        cin >> m.num;
+        m.lnum = strlen(m.num);
+        cout << "请输入第" << i << "个职工的姓名：";
+        cin >> m.name;
+        m.lname = strlen(m.name);
+        cout << "请输入第" << i << "个职工的电话号码：";
+        cin >> m.tel;
+        m.ltel = strlen(m.tel);
+        cout << "请输入第" << i << "个职工的邮政编码：";
+        cin >> m.mail;
+        m.lmail = strlen(m.mail);
+        cout << "请输入第" << i << "个职工的通信地址：";
+        cin >> m.place;
+        m.lplace = strlen(m.place);
+        cout << "第" << i << "个职工的信息（二进制格式）：\n";
+        output(m);
+    }
+    system("pause");
+}
